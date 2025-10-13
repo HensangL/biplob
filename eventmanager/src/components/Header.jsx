@@ -11,15 +11,28 @@ const Header = () => {
     <header>
       <div className="container">
         <nav>
-          <Link to="/" className="logo" onClick={closeMenu}>MusicHub</Link>
+          <a href="#home" className="logo" onClick={closeMenu}>
+            MusicHub
+          </a>
           <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-            <li><Link to="/" className="logo" onClick={closeMenu} >Home</Link></li>
-
-            <li><Link to="/artist" className="logo" onClick={closeMenu} >Artists</Link></li>
-            <li><Link to="/merch" className="logo" onClick={closeMenu} >Merch</Link></li>
-            <li><Link to="/events" className="logo" onClick={closeMenu} >Events</Link></li>
-            <li><Link to="/contact" className="logo" onClick={closeMenu} >Contact</Link></li>
-            <li><Link to="/admin" onClick={closeMenu}>Admin</Link></li>
+            <li>
+              <a href="#home" onClick={closeMenu}>Home</a>
+            </li>
+            <li>
+              <a href="#artists" onClick={closeMenu}>Artists</a>
+            </li>
+            <li>
+              <a href="#merch" onClick={closeMenu}>Merch</a>
+            </li>
+            <li>
+              <a href="#events" onClick={closeMenu}>Events</a>
+            </li>
+            <li>
+              <a href="#contact" onClick={closeMenu}>Contact</a>
+            </li>
+            <li>
+              <Link to="/admin" onClick={closeMenu}>Admin</Link>
+            </li>
           </ul>
           <div className="mobile-menu" onClick={toggleMenu}>☰</div>
         </nav>
