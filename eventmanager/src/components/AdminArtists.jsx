@@ -70,7 +70,7 @@ const AdminPanel = () => {
           </table>
         </div>
       </section>
-      {/* Merch */}
+      {/* Merchaa */}
       <section style={{marginBottom:40}}>
         <h3>Merch</h3>
         <form className="admin-form" onSubmit={handleMerchAdd}>
