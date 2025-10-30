@@ -111,11 +111,11 @@ app.get('/api/socialfeed', (req, res) => {
 
 // POST to create an event (temporary in-memory persistence)
 app.post('/api/events', (req, res) => {
-  const { poster = '', day, month, title, desc, location } = req.body;
+  const { poster = '', day, month, title, desc, location, ticket = '' } = req.body;
   if (!day || !month || !title) {
     return res.status(400).json({ error: 'day, month and title are required' });
   }
-  const newEvent = { poster, day, month, title, desc, location };
+  const newEvent = { poster, day, month, title, desc, location, ticket };
   events.push(newEvent);
   return res.status(201).json(newEvent);
 });

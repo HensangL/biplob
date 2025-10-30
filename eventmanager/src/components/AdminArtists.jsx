@@ -10,7 +10,7 @@ const AdminPanel = () => {
   const [merchForm, setMerchForm] = useState({ name: "", desc: "", price: "", img: "" });
   // Events
   const [events, setEvents] = useState([]);
-  const [eventForm, setEventForm] = useState({ poster: "", day: "", month: "", title: "", desc: "", location: "" });
+  const [eventForm, setEventForm] = useState({ poster: "", day: "", month: "", title: "", desc: "", location: "", ticket: "" });
   // Social Feed
   const [feed, setFeed] = useState([]);
   const [feedForm, setFeedForm] = useState({ img: "", text: "", user: "", time: "" });
@@ -55,8 +55,8 @@ const AdminPanel = () => {
       });
       if (!res.ok) throw new Error("Failed to add event");
       const created = await res.json();
-      setEvents(prev => [...prev, created]);
-      setEventForm({ poster: "", day: "", month: "", title: "", desc: "", location: "" });
+  setEvents(prev => [...prev, created]);
+  setEventForm({ poster: "", day: "", month: "", title: "", desc: "", location: "", ticket: "" });
     } catch (err) {
       alert(err.message);
     }
@@ -181,11 +181,12 @@ const AdminPanel = () => {
           <input name="title" value={eventForm.title} onChange={handleEventChange} placeholder="Title" required />
           <input name="desc" value={eventForm.desc} onChange={handleEventChange} placeholder="Description" required />
           <input name="location" value={eventForm.location} onChange={handleEventChange} placeholder="Location" required />
+          <input name="ticket" value={eventForm.ticket} onChange={handleEventChange} placeholder="Ticket URL (optional)" />
           <button type="submit">Add Event</button>
         </form>
         <div className="admin-table-wrapper">
           <table className="admin-table">
-            <thead><tr><th>Poster</th><th>Day</th><th>Month</th><th>Title</th><th>Description</th><th>Location</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Poster</th><th>Day</th><th>Month</th><th>Title</th><th>Description</th><th>Location</th><th>Ticket</th><th>Actions</th></tr></thead>
             <tbody>{events.map((e,i)=>(
               <tr key={i}>
                 <td>{e.poster ? <img src={e.poster} alt={e.title} width={60}/> : null}</td>
@@ -194,6 +195,7 @@ const AdminPanel = () => {
                 <td>{e.title}</td>
                 <td>{e.desc}</td>
                 <td>{e.location}</td>
+                <td>{e.ticket ? <a href={e.ticket} target="_blank" rel="noopener noreferrer">Link</a> : '-'}</td>
                 <td><button onClick={()=>handleEventDelete(i)}>Delete</button></td>
               </tr>
             ))}</tbody>
