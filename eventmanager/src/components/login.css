@@ -1,86 +1,151 @@
-/* login.css */
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  font-family: Arial, sans-serif;
-  position: relative;
-  overflow: hidden;
+/* Black & white split layout for Admin Login (no gradients, monochrome) */
+
+:root{
+  --white: #ffffff;
+  --black: #000000;
+  --muted: #bfbfbf;
 }
 
-.login-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+html, body, #root { height: 100%; }
+
+.split-container{
+  display:flex;
+  min-height:100vh;
+  background: var(--black);
+  color: var(--white);
+}
+
+/* Right image pane */
+.image-pane{
+  flex: 0 0 50%;
+  min-height:100vh;
+  background-color: #1f1f1f;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* dark overlay to ensure contrast, but only black/white tones */
+.image-overlay{
+  /* center content vertically/horizontally for caption/loader */
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  box-sizing:border-box;
+  color:var(--white);
+}
+
+/* image caption removed (we show only the image) */
+
+/* Left form pane: 50% width - dark panel */
+.form-pane {
+  flex: 0 0 50%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: transparent; /* ✅ no dark panel behind */
+  padding-left: 8%;
 }
 
 .login-box {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 40px 30px;
-  border-radius: 10px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-  position: relative;
-  z-index: 1;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.login-box h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.login-box form {
+  width: 80%;
+  max-width: 520px;
+  padding: 0; /* ✅ no vertical padding creating a box look */
+  background: transparent !important; /* ✅ ensure no bg overlay */
+  box-shadow: none !important;
+  border: none !important;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
-.login-box input {
-  padding: 15px;
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
-  background: white;
-}
-
-.login-box input:focus {
-  outline: none;
-  border-color: #667eea;
-}
-
-.login-box button {
-  padding: 15px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+.login-head {
+  background: transparent;
+  box-shadow: none;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+  margin-bottom: 8px;
 }
 
-.login-box button:hover {
-  transform: translateY(-2px);
+.login-head h1 {
+  font-size: 36px;
+  color: var(--white);
+  font-weight: 700;
 }
 
-.error {
-  color: #e74c3c;
-  text-align: center;
-  margin: 0;
+.subtitle {
   font-size: 14px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.brand{ display:flex; gap:12px; align-items:center; }
+.logo{ display:none; }
+.brand-text h1{ margin:0; font-size:36px; color:var(--white); }
+.subtitle{ margin:6px 0 0 0; font-size:14px; color:#9aa4b2; }
+
+.login-form{ display:flex; flex-direction:column; gap:14px; }
+.field input{ width:100%; padding:14px 18px; border-radius:8px; border:1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.03); color:var(--white); font-size:16px; }
+.field input::placeholder{ color: rgba(255,255,255,0.45); }
+.field input:focus{ outline:2px solid rgba(255,255,255,0.08); box-shadow: 0 8px 28px rgba(0,0,0,0.6); }
+
+.error{ color:#000; background: #ffdede; padding:8px 10px; border-radius:6px; font-size:13px; }
+
+.actions{ margin-top:6px; }
+.btn-primary{ width:100%; padding:14px; border-radius:8px; border:0; background: #ffffff; color:#0b0b0b; font-weight:700; cursor:pointer; }
+.btn-primary:hover{ opacity:0.95; }
+
+/* Labels and layout for fields */
+.field-group{ display:flex; flex-direction:column; gap:8px; }
+.field-label{ color: #d1d5db; font-size:14px; font-weight:600; }
+.password-row{ position:relative; }
+.forgot-link{ position:absolute; right:0; top:0; font-size:13px; color:#9aa4b2; text-decoration:none; }
+.forgot-link:hover{ text-decoration:underline; }
+
+/* Divider */
+/* social login and signup removed per request */
+.btn-primary:hover{ opacity:0.95; }
+
+/* Make the image pane grayscale (force B/W look) */
+.image-pane{ filter: grayscale(100%); }
+
+/* loader for image pane while external image is preloading */
+/* no loader used; image comes from local public images */
+
+/* subtle spacing tweaks for header */
+.brand-text h2{ font-size:18px; margin:0 0 2px 0; font-weight:700; }
+.subtitle{ font-size:12px; margin:0; color:var(--muted); }
+
+/* make logo compact and less heavy (no filled black block) */
+.logo{
+  width:40px;
+  height:40px;
+  display:inline-grid;
+  place-items:center;
+  background: transparent;
+  color:var(--black);
+  border-radius:6px;
+  font-weight:700;
+  font-size:16px;
+  border: 1px solid var(--black);
+}
+
+/* Responsive: stack on small screens, show image on top */
+@media (max-width: 880px){
+  .split-container{ flex-direction:column-reverse; }
+  .image-pane{ flex-basis:40%; height:40vh; }
+  .form-pane{ flex-basis:60%; padding-left:6%; justify-content:center; }
+  .login-box{ width:92%; max-width:640px; }
+}
+
+@media (max-width:480px){
+  .image-pane{ display:none; }
+  .form-pane{ flex-basis:100%; padding-left:6%; }
+  .login-box{ width:96%; padding:20px 0; }
 }
