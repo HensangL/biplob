@@ -112,10 +112,19 @@ const AdminPanel = () => {
   if (error) return <div className="admin-panel"><p style={{ color: "red" }}>{error}</p></div>;
 
   return (
+    <div className="admin-container">
+      <nav className="sidebar">
+        <li>
+          <ul className="linkss"><a href="#artists">Artists</a> </ul>
+          <ul className="linkss"><a href="#merchaa">Merch</a> </ul>
+          <ul className="linkss"><a href="#events">Events</a> </ul>
+          <ul className="linkss"><a href="#socials">Social Feed</a> </ul>
+        </li>
+      </nav>
     <div className="admin-panel">
       <h2>Admin: Manage All Data</h2>
       {/* Artists */}
-      <section style={{marginBottom:40}}>
+      <section id="artists" style={{marginBottom:40}}>
         <h3>Artists</h3>
         <form className="admin-form" onSubmit={handleArtistAdd}>
           <input name="name" value={artistForm.name} onChange={handleArtistChange} placeholder="Name" required />
@@ -138,7 +147,7 @@ const AdminPanel = () => {
         </div>
       </section>
       {/* Merchaa */}
-      <section style={{marginBottom:40}}>
+      <section id="merchaa" style={{marginBottom:40}}>
         <h3>Merch</h3>
         <form className="admin-form" onSubmit={handleMerchAdd}>
           <input name="name" value={merchForm.name} onChange={handleMerchChange} placeholder="Name" required />
@@ -163,7 +172,7 @@ const AdminPanel = () => {
         </div>
       </section>
       {/* Events */}
-      <section style={{marginBottom:40}}>
+      <section id="events" style={{marginBottom:40}}>
         <h3>Events</h3>
         <form className="admin-form" onSubmit={handleEventAdd}>
           <input name="poster" value={eventForm.poster} onChange={handleEventChange} placeholder="Poster Image URL" required />
@@ -192,7 +201,7 @@ const AdminPanel = () => {
         </div>
       </section>
       {/* Social Feed */}
-      <section>
+      <section id="socials">
         <h3>Social Feed</h3>
         <form className="admin-form" onSubmit={handleFeedAdd}>
           <input name="img" value={feedForm.img} onChange={handleFeedChange} placeholder="Image URL" required />
@@ -216,6 +225,7 @@ const AdminPanel = () => {
           </table>
         </div>
       </section>
+    </div>
     </div>
   );
 };
