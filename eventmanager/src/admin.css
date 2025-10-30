@@ -1,6 +1,51 @@
 /* admin.css - Modern admin panel styles */
+/* Background for the entire page: layered gradients + subtle texture */
+body {
+  font-family: 'Inter', sans-serif;
+  color: #222;
+  margin: 0;
+  padding: 0;
+  /* base dark gradient */
+  background-color: #071024;
+  background-image:
+    radial-gradient(800px 400px at 10% 10%, rgba(255,107,53,0.06), transparent 10%),
+    radial-gradient(600px 300px at 90% 80%, rgba(0,123,255,0.04), transparent 12%),
+    linear-gradient(135deg, rgba(6,8,15,0.95) 0%, rgba(2,6,12,0.95) 100%),
+    /* subtle noise overlay using SVG data URI (very small, repeats) */
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='40' height='40' filter='url(%23f)' opacity='0.03' fill='%23000'/></svg>");
+  background-blend-mode: overlay, overlay, normal, overlay;
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
+/* Admin container layout */
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar (already styled) */
+.sidebar {
+  width: 220px;
+  background-color: #000;
+  padding: 20px;
+  border-right: 1px solid #222;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  color: #fff;
+  border-top-right-radius: 100px;
+}
+
+/* Main content area — apply background separately */
 .admin-panel {
+  flex: 1;
+  margin: 0;
+  padding: 40px 32px;
+  background: #f5f6fa; /* light clean background */
+  border-radius: 0;
+  box-shadow: none;
   max-width: 800px;
   margin: 40px auto;
   background: #fff;
