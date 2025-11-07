@@ -526,3 +526,9 @@
   color: #555;
   font-weight: 500;
 }
+.logo-image {
+    height: 50px;
+    width: auto;
+    margin-right: 10px;
+
+}    

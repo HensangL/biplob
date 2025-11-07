@@ -11,12 +11,12 @@ const Header = () => {
     <header>
       <div className="container">
         <nav>
-          <a href="#home" className="logo" onClick={closeMenu}>
-            MusicHub
+          <a href="#hero"  onClick={closeMenu}>
+            <img src="/logo.png" className="logo-image" />
           </a>
           <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
             <li>
-              <a href="#home" onClick={closeMenu}>Home</a>
+              <a href="#hero" onClick={closeMenu}>Home</a>
             </li>
             <li>
               <a href="#artists" onClick={closeMenu}>Artists</a>
