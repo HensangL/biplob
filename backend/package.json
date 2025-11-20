@@ -8,8 +8,13 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.19.2",
-    "cors": "^2.8.5"
+    "mongoose": "^7.5.0"
+  },
+  "optionalDependencies": {
+    "multer": "^1.4.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

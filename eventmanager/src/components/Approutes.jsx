@@ -8,7 +8,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<MainSite />} />
   <Route path="/admin" element={<AdminPage />} />
-  <Route path="/events/:index" element={<EventDetail />} />
+  <Route path="/events/:id" element={<EventDetail />} />
       {/* Optional: 404 page (if you want) */}
       {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>

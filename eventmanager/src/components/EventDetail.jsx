@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
 const EventDetail = () => {
-  const { index } = useParams();
+  const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ const EventDetail = () => {
   useEffect(() => {
     let mounted = true;
     setLoading(true);
-    fetch(`http://localhost:5001/api/events/${index}`)
+  fetch(`http://localhost:5001/api/events/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Event not found");
         return res.json();
@@ -30,7 +30,7 @@ const EventDetail = () => {
     return () => {
       mounted = false;
     };
-  }, [index]);
+  }, [id]);
 
   const extractPlace = (loc) => {
     if (!loc) return null;

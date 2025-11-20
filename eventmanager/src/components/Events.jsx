@@ -150,7 +150,7 @@ const Events = () => {
         ) : (
           <div style={gridStyle}>
             {events.map((e, i) => (
-              <Link to={`/events/${i}`} key={i} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Link to={`/events/${e._id || e.id || i}`} key={e._id || i} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div
                   style={{
                     ...cardStyle,
