@@ -163,6 +163,17 @@ app.get('/api/socialfeed', async (req, res) => {
   }
 });
 
+// Get single social feed post by id
+app.get('/api/socialfeed/:id', async (req, res) => {
+  try {
+    const item = await SocialFeed.findById(req.params.id);
+    if (!item) return res.status(404).json({ error: 'Feed item not found' });
+    res.json(item);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.post('/api/socialfeed', async (req, res) => {
   try {
     const { img = '', text = '', user = '', time = '' } = req.body;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const SocialFeed = () => {
   const [feed, setFeed] = useState([]);
@@ -34,19 +35,25 @@ const SocialFeed = () => {
         ) : (
           <div className="feed-container">
             {feed.map((item, i) => (
-              <div className="feed-item" key={i}>
-                <div
-                  className="feed-img"
-                  style={{ backgroundImage: `url(${item.img})` }}
-                ></div>
-                <div className="feed-content">
-                  <p>{item.text}</p>
-                  <div className="feed-meta">
-                    <span>{item.user}</span>
-                    <span>{item.time}</span>
+              <Link
+                key={item._id || item.id || i}
+                to={`/social/${item._id || item.id || i}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <div className="feed-item">
+                  <div
+                    className="feed-img"
+                    style={{ backgroundImage: `url(${item.img})` }}
+                  ></div>
+                  <div className="feed-content">
+                    <p>{item.text}</p>
+                    <div className="feed-meta">
+                      <span>{item.user}</span>
+                      <span>{item.time}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

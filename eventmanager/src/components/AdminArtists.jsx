@@ -4,7 +4,7 @@ import "../admin.css";
 const AdminPanel = () => {
   // Artists
   const [artists, setArtists] = useState([]);
-  const [artistForm, setArtistForm] = useState({ name: "", desc: "", img: "" });
+  const [artistForm, setArtistForm] = useState({ name: "", desc: "", img: "", instagram: "" });
   const [artistFile, setArtistFile] = useState(null);
   const [artistPreview, setArtistPreview] = useState(null);
   // Merch
