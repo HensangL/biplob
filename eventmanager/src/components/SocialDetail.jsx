@@ -289,7 +289,7 @@ export default function SocialDetail() {
                         display: "flex",
                         justifyContent: "space-between",
                         fontSize: 13,
-                        opacity: 0.9,
+                        opacity: 0.7,
                       }}
                     >
                       <span>{item.user}</span>
