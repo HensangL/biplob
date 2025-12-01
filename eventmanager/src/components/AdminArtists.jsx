@@ -10,8 +10,8 @@ const AdminPanel = () => {
   // Merch
   const [merch, setMerch] = useState([]);
   const [merchForm, setMerchForm] = useState({ name: "", desc: "", price: "", img: "" });
-  const [merchFile, setMerchFile] = useState(null);
-  const [merchPreview, setMerchPreview] = useState(null);
+  const [merchFiles, setMerchFiles] = useState([]);
+  const [merchPreviews, setMerchPreviews] = useState([]);
   // Events
   const [events, setEvents] = useState([]);
   const [eventForm, setEventForm] = useState({ poster: "", day: "", month: "", title: "", desc: "", location: "", ticket: "" });
@@ -63,9 +63,9 @@ const AdminPanel = () => {
   };
 
   const handleMerchFileChange = (e) => {
-    const f = e.target.files && e.target.files[0];
-    setMerchFile(f || null);
-    setMerchPreview(f ? URL.createObjectURL(f) : null);
+    const files = e.target.files ? Array.from(e.target.files) : [];
+    setMerchFiles(files);
+    setMerchPreviews(files.map(f => URL.createObjectURL(f)));
   };
 
   const handleFeedFileChange = (e) => {
@@ -109,16 +109,21 @@ const AdminPanel = () => {
   const handleMerchAdd = async (e) => {
     e.preventDefault();
     try {
-      let imgUrl = merchForm.img;
-      if (merchFile) {
-        const fd = new FormData();
-        fd.append('file', merchFile);
-        const up = await fetch('http://localhost:5001/api/upload', { method: 'POST', body: fd });
-        if (!up.ok) throw new Error('Image upload failed');
-        const j = await up.json();
-        imgUrl = `http://localhost:5001${j.url}`;
+      // support multiple image uploads
+      const images = [];
+      if (merchFiles && merchFiles.length) {
+        for (const file of merchFiles) {
+          const fd = new FormData();
+          fd.append('file', file);
+          const up = await fetch('http://localhost:5001/api/upload', { method: 'POST', body: fd });
+          if (!up.ok) throw new Error('Image upload failed');
+          const j = await up.json();
+          images.push(`http://localhost:5001${j.url}`);
+        }
       }
-      const payload = { ...merchForm, img: imgUrl };
+      // allow single-image URL fallback
+      if (!images.length && merchForm.img) images.push(merchForm.img);
+      const payload = { ...merchForm, images };
       const res = await fetch("http://localhost:5001/api/merch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -131,8 +136,9 @@ const AdminPanel = () => {
       const created = await res.json();
       setMerch((prev) => [created, ...prev]);
       setMerchForm({ name: "", desc: "", price: "", img: "" });
-      setMerchFile(null);
-      if (merchPreview) { URL.revokeObjectURL(merchPreview); setMerchPreview(null); }
+      setMerchFiles([]);
+      merchPreviews.forEach(p => URL.revokeObjectURL(p));
+      setMerchPreviews([]);
     } catch (err) {
       alert(err.message || "Failed to add merch");
     }
@@ -298,9 +304,11 @@ const AdminPanel = () => {
           <input name="desc" value={merchForm.desc} onChange={handleMerchChange} placeholder="Description" required />
           <input name="price" value={merchForm.price} onChange={handleMerchChange} placeholder="Price" required />
           <input name="img" value={merchForm.img} onChange={handleMerchChange} placeholder="Image URL (or upload below)" />
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            <input type="file" accept="image/*" onChange={handleMerchFileChange} />
-            {merchPreview && <img src={merchPreview} alt="preview" style={{ height: 48, borderRadius: 6 }} />}
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+            <input type="file" accept="image/*" multiple onChange={handleMerchFileChange} />
+            {merchPreviews && merchPreviews.length > 0 && merchPreviews.map((p, idx) => (
+              <img key={idx} src={p} alt={`preview ${idx+1}`} style={{ height: 48, borderRadius: 6 }} />
+            ))}
           </div>
           <button type="submit">Add Merch</button>
         </form>
@@ -312,7 +320,7 @@ const AdminPanel = () => {
                 <td>{m.name}</td>
                 <td>{m.desc}</td>
                 <td>{m.price}</td>
-                <td><img src={m.img} alt={m.name} width={60}/></td>
+                <td><img src={(m.images && m.images[0]) || m.img} alt={m.name} width={60}/></td>
                 <td><button onClick={()=>handleMerchDelete(m._id || m.id)}>Delete</button></td>
               </tr>
             ))}</tbody>

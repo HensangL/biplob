@@ -132,11 +132,22 @@ app.get('/api/merch', async (req, res) => {
   }
 });
 
+app.get('/api/merch/:id', async (req, res) => {
+  try {
+    const item = await Merch.findById(req.params.id);
+    if (!item) return res.status(404).json({ error: 'Merch not found' });
+    res.json(item);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.post('/api/merch', async (req, res) => {
   try {
-    const { name, desc = '', price = '', img = '' } = req.body;
+    const { name, desc = '', price = '', img = '', images = [] } = req.body;
     if (!name) return res.status(400).json({ error: 'name is required' });
-    const newItem = await Merch.create({ name, desc, price, img });
+    // Allow creating with images array or single img for backward compat
+    const newItem = await Merch.create({ name, desc, price, img, images });
     res.status(201).json(newItem);
   } catch (err) {
     res.status(500).json({ error: err.message });

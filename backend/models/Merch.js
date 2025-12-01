@@ -7,6 +7,7 @@ const MerchSchema = new Schema({
   desc: { type: String, default: '' },
   price: { type: String, default: '' },
   img: { type: String, default: '' },
+  images: { type: [String], default: [] },
 }, { timestamps: true });
 
 export default mongoose.model('Merch', MerchSchema);
