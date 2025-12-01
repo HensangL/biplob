@@ -575,6 +575,13 @@
 .carousel-btn:focus { outline: 3px solid rgba(255,107,53,0.2); }
 .merch-img { background-size: cover; }
 
+/* Carousel focus and dots */
+.carousel-track:focus { outline: 3px solid rgba(0,123,255,0.18); border-radius: 8px; }
+.carousel-dots { margin-top: 8px; }
+.carousel-dot { width: 10px; height: 10px; border-radius: 999px; border: none; background: #ddd; }
+.carousel-dot.active { background: var(--primary-orange); box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+.carousel-dot:focus { outline: 2px solid rgba(0,123,255,0.25); }
+
 /* Detail page navbar */
 .detail-navbar {
     width: 100%;
