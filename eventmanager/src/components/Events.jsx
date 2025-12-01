@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Carousel from './Carousel';
 
 const Events = () => {
   const [events, setEvents] = useState([]);
@@ -149,76 +148,41 @@ const Events = () => {
         ) : error ? (
           <p style={{ color: "tomato" }}>{error}</p>
         ) : (
-          events.length > 3 ? (
-            <Carousel
-              items={events}
-              keyFor={(it, i) => it._id || it.id || i}
-              renderItem={(e, i) => (
-                <Link to={`/events/${e._id || e.id || i}`} key={i} style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <div
-                    style={{
-                      ...cardStyle,
-                    }}
-                  >
-                    <div style={imgContainerStyle}>
-                      <img
-                        src={e.poster}
-                        alt={e.title}
-                        style={{
-                          ...imgStyle,
-                        }}
-                      />
-                      <div style={overlayStyle}>
-                        <h3 style={titleCardStyle}>{e.title}</h3>
-                        <p style={descStyle}>{e.desc}</p>
-                        <div style={locationStyle}>📍 {e.location}</div>
-                      </div>
-                      <div style={dateStyle}>
-                        <span style={monthStyle}>{e.month}</span>
-                        <span style={dayStyle}>{e.day}</span>
-                      </div>
+          <div style={gridStyle}>
+            {events.map((e, i) => (
+              <Link to={`/events/${e._id || e.id || i}`} key={e._id || i} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div
+                  style={{
+                    ...cardStyle,
+                    ...(hoverIndex === i ? cardHoverStyle : {}),
+                  }}
+                  onMouseEnter={() => setHoverIndex(i)}
+                  onMouseLeave={() => setHoverIndex(null)}
+                >
+                  <div style={imgContainerStyle}>
+                    <img
+                      src={e.poster}
+                      alt={e.title}
+                      style={{
+                        ...imgStyle,
+                        transform:
+                          hoverIndex === i ? "scale(1.08)" : "scale(1)",
+                      }}
+                    />
+                    <div style={overlayStyle}>
+                      <h3 style={titleCardStyle}>{e.title}</h3>
+                      <p style={descStyle}>{e.desc}</p>
+                      <div style={locationStyle}>📍 {e.location}</div>
+                    </div>
+                    <div style={dateStyle}>
+                      <span style={monthStyle}>{e.month}</span>
+                      <span style={dayStyle}>{e.day}</span>
                     </div>
                   </div>
-                </Link>
-              )}
-            />
-          ) : (
-            <div style={gridStyle}>
-              {events.map((e, i) => (
-                <Link to={`/events/${e._id || e.id || i}`} key={e._id || i} style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <div
-                    style={{
-                      ...cardStyle,
-                      ...(hoverIndex === i ? cardHoverStyle : {}),
-                    }}
-                    onMouseEnter={() => setHoverIndex(i)}
-                    onMouseLeave={() => setHoverIndex(null)}
-                  >
-                    <div style={imgContainerStyle}>
-                      <img
-                        src={e.poster}
-                        alt={e.title}
-                        style={{
-                          ...imgStyle,
-                          transform:
-                            hoverIndex === i ? "scale(1.08)" : "scale(1)",
-                        }}
-                      />
-                      <div style={overlayStyle}>
-                        <h3 style={titleCardStyle}>{e.title}</h3>
-                        <p style={descStyle}>{e.desc}</p>
-                        <div style={locationStyle}>📍 {e.location}</div>
-                      </div>
-                      <div style={dateStyle}>
-                        <span style={monthStyle}>{e.month}</span>
-                        <span style={dayStyle}>{e.day}</span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )
+                </div>
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </section>

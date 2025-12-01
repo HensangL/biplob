@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Carousel from './Carousel';
 
 const Artists = () => {
   const [artists, setArtists] = useState([]);
@@ -33,49 +32,25 @@ const Artists = () => {
         ) : error ? (
           <p style={{ color: "red" }}>{error}</p>
         ) : (
-          artists.length > 3 ? (
-            <Carousel
-              items={artists}
-              keyFor={(it, i) => it._id || it.id || i}
-              renderItem={(artist, i) => (
-                <div className="artist-card" key={i}>
-                  <div
-                    className="artist-img"
-                    style={{ backgroundImage: `url(${artist.img})` }}
-                  ></div>
-                  <div className="artist-info">
-                    <h3>{artist.name}</h3>
-                    <p>{artist.desc}</p>
-                    <div className="social-links">
-                      <a href="#">♬</a>
-                      <a href="#">📷</a>
-                      <a href="#">📘</a>
-                    </div>
+          <div className="artists-grid">
+            {artists.map((artist, i) => (
+              <div className="artist-card" key={i}>
+                <div
+                  className="artist-img"
+                  style={{ backgroundImage: `url(${artist.img})` }}
+                ></div>
+                <div className="artist-info">
+                  <h3>{artist.name}</h3>
+                  <p>{artist.desc}</p>
+                  <div className="social-links">
+                    <a href="#">♬</a>
+                    <a href="#">📷</a>
+                    <a href="#">📘</a>
                   </div>
                 </div>
-              )}
-            />
-          ) : (
-            <div className="artists-grid">
-              {artists.map((artist, i) => (
-                <div className="artist-card" key={i}>
-                  <div
-                    className="artist-img"
-                    style={{ backgroundImage: `url(${artist.img})` }}
-                  ></div>
-                  <div className="artist-info">
-                    <h3>{artist.name}</h3>
-                    <p>{artist.desc}</p>
-                    <div className="social-links">
-                      <a href="#">♬</a>
-                      <a href="#">📷</a>
-                      <a href="#">📘</a>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </section>

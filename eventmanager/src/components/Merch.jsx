@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from 'react-router-dom';
-import Carousel from './Carousel';
 
 const Merch = () => {
   const [merchItems, setMerchItems] = useState([]);
@@ -143,92 +142,53 @@ const Merch = () => {
     <section id="merch" style={styles.section}>
       <h2 style={styles.title}>Exclusive Merchandise</h2>
 
-      {/* DESKTOP GRID OR CAROUSEL */}
-      {merchItems.length > 3 ? (
-        <Carousel
-          items={merchItems}
-          keyFor={(it, i) => it._id || it.id || i}
-          renderItem={(item, i) => (
-            <Link key={i} to={`/merch/${item._id || item.id || i}`} style={{ textDecoration: "none", color: "inherit" }}>
-              <div
-                className="merch-card"
-                style={styles.card}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = styles.cardHover.transform)}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = "none")}
-              >
-                <div
-                  style={{
-                    ...styles.img,
-                    backgroundImage: `url(${item.images?.[0] || item.img})`,
-                  }}
-                ></div>
-                <div style={styles.cardText}>
-                  <h3 style={styles.name}>{item.name}</h3>
-                  <p style={styles.desc}>{item.desc}</p>
-                  <div style={styles.price}>{item.price}</div>
-                  <button
-                    style={styles.waBtn}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const link = `https://wa.me/1234567890?text=Hi,%20I'm%20interested%20in%20the%20${encodeURIComponent(item.name)}`;
-                      window.open(link, "_blank");
-                    }}
-                  >
-                    Buy on WhatsApp
-                  </button>
-                </div>
-              </div>
-            </Link>
-          )}
-        />
-      ) : (
-        <div className="desktop-grid" style={styles.grid}>
-          {merchItems.map((item, i) => (
-            <Link
-              key={i}
-              to={`/merch/${item._id || item.id || i}`}
-              style={{ textDecoration: "none", color: "inherit" }}
+      {/* DESKTOP GRID */}
+      <div className="desktop-grid" style={styles.grid}>
+        {merchItems.map((item, i) => (
+          <Link
+            key={i}
+            to={`/merch/${item._id || item.id || i}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <div
+              className="merch-card"
+              style={styles.card}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = styles.cardHover.transform)}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "none")}
             >
+              {/* IMAGE */}
               <div
-                className="merch-card"
-                style={styles.card}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = styles.cardHover.transform)}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = "none")}
-              >
-                {/* IMAGE */}
-                <div
-                  style={{
-                    ...styles.img,
-                    backgroundImage: `url(${item.images?.[0] || item.img})`,
-                  }}
-                ></div>
+                style={{
+                  ...styles.img,
+                  backgroundImage: `url(${item.images?.[0] || item.img})`,
+                }}
+              ></div>
 
-                {/* TEXT */}
-                <div style={styles.cardText}>
-                  <h3 style={styles.name}>{item.name}</h3>
-                  <p style={styles.desc}>{item.desc}</p>
-                  <div style={styles.price}>{item.price}</div>
-                  
-                  <button
-                    style={styles.waBtn}
-                    onMouseEnter={(e) => Object.assign(e.target.style, styles.waBtnHover)}
-                    onMouseLeave={(e) => Object.assign(e.target.style, styles.waBtn)}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const link = `https://wa.me/1234567890?text=Hi,%20I'm%20interested%20in%20the%20${encodeURIComponent(
-                        item.name
-                      )}`;
-                      window.open(link, "_blank");
-                    }}
-                  >
-                    Buy on WhatsApp
-                  </button>
-                </div>
+              {/* TEXT */}
+              <div style={styles.cardText}>
+                <h3 style={styles.name}>{item.name}</h3>
+                <p style={styles.desc}>{item.desc}</p>
+                <div style={styles.price}>{item.price}</div>
+                
+                <button
+                  style={styles.waBtn}
+                  onMouseEnter={(e) => Object.assign(e.target.style, styles.waBtnHover)}
+                  onMouseLeave={(e) => Object.assign(e.target.style, styles.waBtn)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const link = `https://wa.me/1234567890?text=Hi,%20I'm%20interested%20in%20the%20${encodeURIComponent(
+                      item.name
+                    )}`;
+                    window.open(link, "_blank");
+                  }}
+                >
+                  Buy on WhatsApp
+                </button>
               </div>
-            </Link>
-          ))}
-        </div>
-      )}
+            </div>
+          </Link>
+        ))}
+      </div>
 
       {/* MOBILE CAROUSEL */}
       <div className="mobile-carousel" style={styles.carousel}>
